@@ -18,17 +18,20 @@ $(function () {
                     }
                 })
                 if (flag) {
-                    alert('用户名或密码为空，请重新输入');
+                    // alert('用户名或密码为空，请重新输入');
+                    $('.modal').modal('show');
+                    $('.modal-body p').text('用户名或密码为空，请重新输入');
                     return false;
                 }
             },
             success: function (res) {
                 // console.log(res);
+                $('.modal').modal('show');
+                $('.modal-body p').text(res.msg)
                 if (res.code == 200) {
-                    alert('登录成功');
-                    window.location.href = './index.html';
-                } else {
-                    alert(res.msg);
+                    $('.modal').on('hidden.bs.modal', function (e) {
+                        window.location.href = './index.html';
+                    })
                 }
             }
         })
