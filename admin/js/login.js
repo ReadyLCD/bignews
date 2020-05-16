@@ -7,7 +7,7 @@ $(function () {
         $.ajax({
             type: 'post',
             url: 'http://localhost:8080/api/v1/admin/user/login',
-            data: $('.login_form').serialize(),
+            data: $(this).serialize(),
             // 发送请求前，判断用户名或密码是否为空
             beforeSend: function () {
                 var $obj = $('.login_form input[name]')
@@ -29,6 +29,8 @@ $(function () {
                 $('.modal').modal('show');
                 $('.modal-body p').text(res.msg)
                 if (res.code == 200) {
+                    // 设置token放在本地存储
+                    window.localStorage.setItem('token', res.token);
                     $('.modal').on('hidden.bs.modal', function (e) {
                         window.location.href = './index.html';
                     })
