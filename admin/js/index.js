@@ -20,4 +20,25 @@ $(function () {
         localStorage.removeItem('token');
         window.location.href = './login.html';
     })
+
+    // 点击左侧导航栏效果
+    // 一级列表
+    $('.level01').on('click', function () {
+        // 当前的一栏添加这个类，其他的移除这个类
+        $(this).addClass('active').siblings().removeClass('active');
+        if ($(this).next().hasClass('level02')) {
+            $(this).next().sideToggle();
+            // 让小图标旋转
+            $(this).find('b').toggleClass('rotate0');
+            // 默认选中第一个
+            $('.level02>li>a').first()[0].click();
+        } else {
+            $('.level02>li').removeClass('active');
+        }
+    })
+
+    // 二级列表
+    $('.level02>li').on('click', function () {
+        $(this).addClass('active').siblings().removeClass('active');
+    })
 })
