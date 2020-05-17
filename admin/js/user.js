@@ -27,22 +27,47 @@ $(function () {
         $('.user_pic').attr('src', file);
     })
 
-    /* // 修改数据提交
+    // 修改数据提交
     $('#form').on('submit', function (e) {
         // 阻止默认提交行为
         e.preventDefault();
         // 发送ajax请求
-        // FormData对象对象收集的数据转换成二进制
+        // FormData对象会将收集的数据转换成二进制
         var data = new FormData(this);
         $.ajax({
             type: 'post',
             url: BigNew.user_edit,
             data: data,
+            headers: {
+                'Authorization': localStorage.getItem('token')
+            },
+            // 不要使用默认的编码，底层已经是二进制
             contentType: false,
+            // 不要转换为字符串，因为底层不设置会转换为字符串
             processData: false,
             success: function (res) {
-                console.log(res);
+                // console.log(res);
+                if (res.code == 200) {
+                    // 这样的话，index.html页面刷新，会回到index页面，用户体验不好
+                    // parent.window.location.reload();
+                    $.ajax({
+                        type: 'get',
+                        // url: 'http://localhost:8080/api/v1/admin/user/info',
+                        url: BigNew.user_info,
+                        headers: {
+                            'Authorization': localStorage.getItem('token')
+                        },
+                        success: function (res) {
+                            // console.log(res);
+                            if (res.code == 200) {
+                                parent.$('.user_info img').attr('src', res.data.userPic);
+                                parent.$('.user_info span').html('欢迎&nbsp;&nbsp;' + res.data.nickname);
+                                parent.$('.user_center_link img').attr('src', res.data.userPic);
+                            }
+                        }
+                    })
+                }
             }
         })
-    }) */
+    })
 })
