@@ -3,10 +3,9 @@ $(function () {
     $.ajax({
         type: 'get',
         url: BigNew.user_detail,
-        // dataType: 'json',
-        headers: {
+        /* headers: {
             'Authorization': localStorage.getItem('token')
-        },
+        }, */
         success: function (res) {
             // console.log(res);
             if (res.code == 200) {
