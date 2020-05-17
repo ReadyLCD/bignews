@@ -48,6 +48,38 @@
             </table>
         </div>
     </div>
+
+    <!-- 引用boostrap的模态框加表单 -->
+    <div class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">新增分类</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="form">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">分类名称</label>
+                            <input type="text" class="form-control" name="name" id="exampleInputEmail1"
+                                placeholder="name">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">分类别名</label>
+                            <input type="text" class="form-control" name="slug" id="exampleInputPassword1"
+                                placeholder="othername">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary confirm">确定</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
     <script type="text/template" id="modal">
        {{each list value index}}
             <tr>
