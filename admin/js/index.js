@@ -34,6 +34,7 @@ $(function () {
             $('.level02>li>a').first()[0].click();
         } else {
             $('.level02>li').removeClass('active');
+            $('.level02').slideUp();
         }
     })
 
