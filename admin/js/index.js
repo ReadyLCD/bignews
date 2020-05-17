@@ -27,7 +27,7 @@ $(function () {
         // 当前的一栏添加这个类，其他的移除这个类
         $(this).addClass('active').siblings().removeClass('active');
         if ($(this).next().hasClass('level02')) {
-            $(this).next().sideToggle();
+            $(this).next().slideToggle();
             // 让小图标旋转
             $(this).find('b').toggleClass('rotate0');
             // 默认选中第一个
