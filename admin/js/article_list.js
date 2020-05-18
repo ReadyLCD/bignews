@@ -27,6 +27,9 @@ $(function () {
                 console.log(res);
                 var htmlStr = template('articlelist', res.data);
                 $('tbody').html(htmlStr);
+
+                // 服务端响应数据回来启动分页功能
+                pagination(res.data.totalPage);
             }
         })
     }
@@ -43,4 +46,27 @@ $(function () {
             perpage: 7
         });
     })
+
+    // 实现分页功能
+    function pagination(totalPages, visiblePages) {
+        $('#pagination-demo').twbsPagination({
+            totalPages: totalPages,  //总页数
+            visiblePages: visiblePages || 7,  //每页显示的条数
+            first: '首页',
+            last: '最后一页',
+            next: '下一页',
+            prev: '上一页',
+            initiateStartPageClick: false,  //插件初始化时在起始页面上点击 false
+            onPageClick: function (event, page) {
+                // console.log(event, page);
+                getArticleList({
+                    key: $('#key').val(),
+                    type: $('#selCategory').val(),
+                    state: $('#selStatus').val(),
+                    page: page,
+                    perpage: 7
+                });
+            }
+        });
+    }
 })
