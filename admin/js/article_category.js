@@ -19,6 +19,7 @@ $(function () {
         $('.modal-title').text('新增分类');
         $('#form')[0].reset();
     })
+    // 新增分类或者编辑分类
     $('.addModal .confirm').on('click', function () {
         var id = $('input[name="id"]').val();
         $.ajax({
@@ -44,20 +45,36 @@ $(function () {
         })
     })
 
-    // 编辑分类
+    // 编辑分类前先查找分类
     $('.category_table').on('click', '.btn-info', function () {
         $('.addModal').modal('show');
         $('.modal-title').text('编辑分类');
 
-        var idx = $(this).data('index');
+        // 第一种方式
+        /* var idx = $(this).data('index');
         // console.log(idx);
         // console.log(info);
         var obj = info[idx];
         // window.id = obj.id;
-
         $('input[name="id"]').val(obj.id);
         $('input[name="name"]').val(obj.name);
-        $('input[name="slug"]').val(obj.slug);
+        $('input[name="slug"]').val(obj.slug); */
+        // 第二种方式
+        $.ajax({
+            type: 'get',
+            url: BigNew.category_search,
+            data: {
+                id: $(this).data('id')
+            },
+            success: function (res) {
+                // console.log(res);
+                if (res.code == 200) {
+                    $('input[name="id"]').val(res.data[0].id);
+                    $('input[name="name"]').val(res.data[0].name);
+                    $('input[name="slug"]').val(res.data[0].slug);
+                }
+            }
+        })
     })
 
     // 删除分类
