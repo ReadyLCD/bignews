@@ -4,7 +4,7 @@ $(function () {
         type: 'get',
         url: BigNew.category_list,
         success: function (res) {
-            console.log(res);
+            // console.log(res);
             var htmlStr = template('opt', res);
             $('#selCategory').html(htmlStr);
         }
@@ -24,12 +24,18 @@ $(function () {
             url: BigNew.article_query,
             data: data,
             success: function (res) {
-                console.log(res);
+                // console.log(res);
                 var htmlStr = template('articlelist', res.data);
                 $('tbody').html(htmlStr);
 
                 // 服务端响应数据回来启动分页功能
-                pagination(res.data.totalPage);
+                if (res.data.totalPage == 0) {
+                    $('#pagination-demo').hide().next().show();
+                } else {
+                    $('#pagination-demo').show().next().hide();
+
+                    pagination(res.data.totalPage);
+                }
             }
         })
     }
@@ -38,13 +44,6 @@ $(function () {
     $('#btnSearch').on('click', function (e) {
         // 阻止默认提交行为
         e.preventDefault();
-        /* getArticleList({
-            key: $('#key').val(),
-            type: $('#selCategory').val(),
-            state: $('#selStatus').val(),
-            page: 1,
-            perpage: 7
-        }); */
         $.ajax({
             type: 'get',
             url: BigNew.article_query,
@@ -59,7 +58,7 @@ $(function () {
                 // console.log(res);
                 var htmlStr = template('articlelist', res.data);
                 $('tbody').html(htmlStr);
-
+                // 筛选文章分类时，有些文章分类还没来的及添加数据
                 if (res.data.totalPage == 0) {
                     $('#pagination-demo').hide().next().show();
                 } else {
