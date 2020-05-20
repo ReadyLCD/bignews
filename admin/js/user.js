@@ -37,9 +37,9 @@ $(function () {
             type: 'post',
             url: BigNew.user_edit,
             data: data,
-            headers: {
+            /* headers: {
                 'Authorization': localStorage.getItem('token')
-            },
+            }, */
             // 不要使用默认的编码，底层已经是二进制
             contentType: false,
             // 不要转换为字符串，因为底层不设置会转换为字符串

@@ -38,13 +38,34 @@ $(function () {
     $('#btnSearch').on('click', function (e) {
         // 阻止默认提交行为
         e.preventDefault();
-        getArticleList({
+        /* getArticleList({
             key: $('#key').val(),
             type: $('#selCategory').val(),
             state: $('#selStatus').val(),
             page: 1,
             perpage: 7
-        });
+        }); */
+        $.ajax({
+            type: 'get',
+            url: BigNew.article_query,
+            data: {
+                key: $('#key').val(),
+                type: $('#selCategory').val(),
+                state: $('#selStatus').val(),
+                page: 1,
+                perpage: 7
+            },
+            success: function (res) {
+                console.log(res);
+                var htmlStr = template('articlelist', res.data);
+                $('tbody').html(htmlStr);
+
+                // 服务端响应数据回来启动分页功能
+                // pagination(res.data.totalPage);
+                // 第一个参数是当总页码发生改变的事件，第二个参数是总页数，第三个参数是默认显示的页码值
+                $('#pagination-demo').twbsPagination('changeTotalPages', res.data.totalPage, 1);
+            }
+        })
     })
 
     // 实现分页功能
