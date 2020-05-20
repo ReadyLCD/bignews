@@ -12,6 +12,8 @@
     <link rel="stylesheet" href="./css/main.css">
     <script src="./libs/jquery-1.12.4.min.js"></script>
     <!-- 引入boostrap的js文件 -->
+    <script src="./libs/bootstrap/js/bootstrap.min.js"></script>
+    <!-- 引入分页插件js文件 -->
     <script src="./libs/jquery.twbsPagination.js"></script>
     <!-- 引入模板引擎js文件 -->
     <script src="./libs/template-web.js"></script>
@@ -70,6 +72,26 @@
         </div>
     </div>
 
+    <!-- 删除文章列表中文章的模态框 -->
+    <div class="modal fade delModal" id="delModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">温馨提示</h4>
+                </div>
+                <div class="modal-body">
+                    <p>你确定要删除这条数据吗？？？</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary btn-sure">确定</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
     <!-- select中的模板 -->
     <script type="text/template" id="opt">
         <option value="">所有分类</option>
@@ -86,11 +108,11 @@
                 <td>{{value.title}}</td>
                 <td>{{value.author}}</td>
                 <td>{{value.category}}</td>
-                <td class="text-center">2017-06-08 07:08:46</td>
+                <td class="text-center">{{value.date}}</td>
                 <td class="text-center">{{value.state}}</td>
                 <td class="text-center">
                     <a href="article_edit.html" class="btn btn-default btn-xs">编辑</a>
-                    <a href="javascript:void(0);" class="btn btn-danger btn-xs delete">删除</a>
+                    <button data-id="{{value.id}}" data-toggle="modal" data-target="#delModal" class="btn btn-danger btn-xs delete">删除</button>
                 </td>
             </tr>
        {{/each}}
