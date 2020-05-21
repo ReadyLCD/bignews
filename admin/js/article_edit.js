@@ -25,6 +25,7 @@ $(function () {
         success: function (res) {
             // console.log(res);
             if (res.code == 200) {
+                $('#inputId').val(res.data.id);
                 $('#inputTitle').val(res.data.title);
                 $('.article_cover').attr('src', res.data.cover);
                 // $('.category').val(res.data.categoryId);
@@ -55,4 +56,36 @@ $(function () {
         var file = URL.createObjectURL(this.files[0]);
         $('.article_cover').attr('src', file);
     })
+
+    // 给修改按钮注册事件
+    $('#form').on('click', '.btn', function (e) {
+        // 阻止默认提交行为
+        e.preventDefault();
+        // console.log(e.target);
+        var form = $('#form')[0];
+        var data = new FormData(form);
+        if ($(e.target).hasClass('btn-edit')) {
+            data.append('state', '已发布');
+        } else {
+            data.append('state', '草稿');
+        }
+        data.append('content', editor.txt.html());
+        $.ajax({
+            type: 'post',
+            url: BigNew.article_edit,
+            data: data,
+            // 不要进行其他的编码，因为底层编码已经是二进制
+            contentType: false,
+            // 不要转换为字符串
+            processData: false,
+            success: function (res) {
+                // console.log(res);
+                if (res.code == 200) {
+                    // 退回到上一个页面
+                    window.history.back();
+                }
+            }
+        })
+    })
+
 })
