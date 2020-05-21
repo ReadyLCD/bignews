@@ -51,13 +51,12 @@ $(function () {
 
     // 实现删除评论功能
     $('tbody').on('click', '.btn-delete', function () {
-        var id = $(this).data('id');
         // 发送请求
         $.ajax({
             type: 'post',
             url: BigNew.comment_delete,
             data: {
-                id: id
+                id: $(this).data('id')
             },
             success: function (res) {
                 // console.log(res);
@@ -70,38 +69,42 @@ $(function () {
 
     // 实现评论审核不通过功能
     $('tbody').on('click', '.btn-reject', function () {
-        var id = $(this).data('id');
         var _this = this;
         // 发送请求
         $.ajax({
             type: 'post',
             url: BigNew.comment_reject,
             data: {
-                id: id
+                id: $(this).data('id')
             },
             success: function (res) {
                 // console.log(res);
                 if (res.code == 200) {
                     $(_this).parent().prev().html(res.msg);
+                } else {
+                    $('.modal p').text(res.msg);
+                    $('.modal').modal('show');
                 }
             }
         })
     })
     // 实现评论审核通过功能
     $('tbody').on('click', '.btn-pass', function () {
-        var id = $(this).data('id');
         var _this = this;
         // 发送请求
         $.ajax({
             type: 'post',
             url: BigNew.comment_pass,
             data: {
-                id: id
+                id: $(this).data('id')
             },
             success: function (res) {
                 // console.log(res);
                 if (res.code == 200) {
                     $(_this).parent().prev().html(res.msg);
+                } else {
+                    $('.modal p').text(res.msg);
+                    $('.modal').modal('show');
                 }
             }
         })
