@@ -196,4 +196,10 @@ $(function () {
             }
         })
     })
+
+    // 给发表文章注册事件
+    $('#release_btn').on('click', function () {
+        // console.log(213);
+        parent.$('.level02>li:eq(1)').click();
+    })
 })
