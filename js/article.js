@@ -55,19 +55,33 @@ $(function () {
     // 点击搜索按钮跳转到list.html
     // 根据url地址？后面携带的关键词来查询
     $('.search_btn').on('click', function () {
-        var txtValue = $('.search_txt').val();
+        getIptValue();
+    })
+
+    //搜索框按回车键发送搜索内容
+    $(document).on('keydown', function (e) {
+        // console.log(e.keyCode);  //13
+        //$('.search_txt').is(':focus') 判断输入框是否获取焦点
+        if (e.keyCode == 13 && $('.search_txt').is(':focus')) {
+            getIptValue();
+        }
+    })
+
+    // 封装了搜索内容的函数
+    function getIptValue() {
         // 判断搜索的内容
+        var txtValue = $('.search_txt').val();
         if (!txtValue.trim()) {
-            alert('搜索的内容不能为空，请重新输入');
+            alert('搜索的内容不能为空，请输入');
             return;
         }
-        // 跳转到列表页并把关键词带过去
+        // 跳转到列表页把关键词带过去
         $('.search_txt').val('');
         window.location.href = './list.html?txtSearch=' + txtValue;
-    })
+    }
 })
 
-// 搜索文章的入口函数
+// 搜索文章列表的入口函数
 $(function () {
     // 根据index页面中url带过来的？后面的参数
     var str = location.search;
@@ -175,6 +189,7 @@ $(function () {
                 // console.log(res);
                 var htmlStr = template('commentlist', res);
                 $('.comment_list_con').html(htmlStr);
+                $('.comment_count').html(res.data.length + '条评论');
             }
         })
     }
