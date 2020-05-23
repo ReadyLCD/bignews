@@ -168,5 +168,76 @@ $(function () {
         myChart1.setOption(option1);
     }
 
-    // 分类访问量
+    // 日文章访问量
+    $.ajax({
+        type: 'get',
+        url: BigNew.article_dayvisit,
+        success: function (res) {
+            // console.log(res);
+            if (res.code == 200) {
+                var dataOne = [];
+                var dataTwo = [];
+                for (var key in res.data) {
+                    dataOne.push(key);
+                    dataTwo.push(res.data[key]);
+                }
+                // console.log(dataOne);
+                // console.log(dataTwo);
+                loadEchartsThree(dataOne, dataTwo);
+            }
+        }
+    })
+    // 柱状图Echarts
+    function loadEchartsThree(dataOne, dataTwo) {
+        // 基于准备好的dom，初始化echarts实例
+        var myChart2 = echarts.init(document.getElementById('column_show'));
+
+        option2 = {
+            title: {
+                left: 'center',
+                text: '日文章访问量',
+            },
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                    type: 'line'        // 默认为直线，可选为：'line' | 'shadow'
+                },
+
+            },
+            legend: {
+                data: ['日访问量'],
+                top: 30
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis: [
+                {
+                    type: 'category',
+                    data: dataOne
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value'
+                }
+            ],
+            color: ['#3398DB'],
+            series: [
+                {
+                    name: '日访问量',
+                    type: 'bar',
+                    barWidth: '50%',
+                    data: dataTwo
+                }
+            ]
+        };
+
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart2.setOption(option2);
+    }
 })

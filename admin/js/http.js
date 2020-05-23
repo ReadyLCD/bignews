@@ -23,7 +23,8 @@
         comment_delete: baseURL + '/admin/comment/delete',//文章评论删除
         data_info: baseURL + '/admin/data/info', // 获取总体的统计数据
         day_article: baseURL + '/admin/data/article', // 日新增文章数据统计,
-        article_count: baseURL + '/admin/data/category' // 文章分类中的数量统计
+        article_count: baseURL + '/admin/data/category', // 文章分类中的数量统计
+        article_dayvisit: baseURL + '/admin/data/visit' //文章分类中日访问量
     };
 
     //暴露接口
